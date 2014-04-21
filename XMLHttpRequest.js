@@ -64,30 +64,23 @@ function HandleRequest () {
 	}
 }
 
-function GetRequest ($page, $parameters, $target) {
+function GetRequest ($page, $parameters, $target, $method, $async) {
 //--- This function initiates a request
+
+	if ($method=="") {
+		$method="GET";
+	}
 	
-	//--- Clear buttons for that section
-	ClearSectionButtons ()
-	
-	//--- Clear the section title
-	SetSectionTitle ('');
-
-    //--- Stop any page refreshes
-    try {
-    
-        clearInterval(Interval);
-
-    } catch(e) {
-    
-    }
-
+	if ($async) {
+		$async=true;
+	}
+		
 	//--- Set the object that will display the output returned
 	display = $target;
 	
 	//--- Send the request
-	xmlhttp.open('GET', $page, true);
-
+	xmlhttp.open($method, $page, $async);
+	
 	//--- Set the callback function
 	xmlhttp.onreadystatechange = HandleRequest;
 	
